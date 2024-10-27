@@ -1,6 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeadLeague", "LeadLeague\LeadLeague.csproj", "{01F1E741-BD7E-40A5-A062-C073393A441E}"
+# 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeadLeague", "LeadLeague\LeadLeague.csproj", "{01F1E741-BD7E-40A5-A062-C073393A441E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeadLeague.Tests", "LeadLeague.Tests\LeadLeague.Tests.csproj", "{B1806C35-1073-4DAE-82D3-442400EEFA00}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +17,15 @@ Global
 		{01F1E741-BD7E-40A5-A062-C073393A441E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01F1E741-BD7E-40A5-A062-C073393A441E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01F1E741-BD7E-40A5-A062-C073393A441E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1806C35-1073-4DAE-82D3-442400EEFA00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1806C35-1073-4DAE-82D3-442400EEFA00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1806C35-1073-4DAE-82D3-442400EEFA00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1806C35-1073-4DAE-82D3-442400EEFA00}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {35BCCFE6-BA36-4A14-9D11-5CDE37519FD1}
 	EndGlobalSection
 EndGlobal

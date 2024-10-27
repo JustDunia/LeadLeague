@@ -1,5 +1,7 @@
 using LeadLeague;
+using Microsoft.AspNetCore.Authorization;
 using Serilog;
+using static LeadLeague.AuthConfiguration;
 
 Logger.Create();
 
@@ -11,11 +13,17 @@ try
 
     builder.Host.UseSerilog();
 
+    builder.Services.ConfigureAuth();
+
     builder.Services.AddProblemDetails();
+
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 
     var app = builder.Build();
+
+    app.UseAuthentication();
+    app.UseAuthorization();
 
     if (app.Environment.IsDevelopment())
     {
@@ -25,7 +33,7 @@ try
 
     app.UseHttpsRedirection();
 
-    app.MapGet("/", () => "Hello world");
+    app.MapGet("/", [Authorize] (HttpContext context) => "Hello world");
 
     app.Run();
 }
