@@ -4,4 +4,7 @@ obj/
 riderModule.iml
 /_ReSharper.Caches/
 .idea/
+.vs/
 appsettings.Development.json
+/LeadLeague/LeadLeague.csproj.user
+/LeadLeague/Properties/launchSettings.json
