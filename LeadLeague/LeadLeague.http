@@ -1,0 +1,6 @@
+@LeadLeague_HostAddress = http://localhost:5032
+
+GET {{LeadLeague_HostAddress}}/
+Accept: application/json
+
+###
