@@ -1,5 +1,7 @@
 using LeadLeague;
+using LeadLeague.Database;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 using static LeadLeague.AuthConfiguration;
 
@@ -19,6 +21,10 @@ try
 
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
+
+    builder.Services.AddDbContext<AppDbContext>(options => options
+        .UseNpgsql(builder.Configuration.GetConnectionString("Default"))
+    );
 
     var app = builder.Build();
 
