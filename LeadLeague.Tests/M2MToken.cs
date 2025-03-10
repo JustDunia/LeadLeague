@@ -1,6 +1,6 @@
+using Microsoft.VisualStudio.TestPlatform.Utilities;
 using System.Net.Http.Headers;
 using System.Text.Json;
-using Microsoft.VisualStudio.TestPlatform.Utilities;
 using Xunit.Abstractions;
 
 namespace LeadLeague.Tests;
