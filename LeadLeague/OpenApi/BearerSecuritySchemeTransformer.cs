@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.OpenApi;
 using Microsoft.OpenApi.Models;
 
-namespace LeadLeague
+namespace LeadLeague.OpenApi
 {
     internal sealed class BearerSecuritySchemeTransformer() : IOpenApiDocumentTransformer
     {

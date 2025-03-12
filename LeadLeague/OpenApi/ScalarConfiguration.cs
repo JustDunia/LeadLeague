@@ -1,6 +1,6 @@
 ﻿using Scalar.AspNetCore;
 
-namespace LeadLeague
+namespace LeadLeague.OpenApi
 {
     internal static class ScalarConfiguration
     {

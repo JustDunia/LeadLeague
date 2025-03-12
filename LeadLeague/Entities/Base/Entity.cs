@@ -11,5 +11,9 @@ public abstract class Entity
 
 public abstract class EntityDbConfiguration<TEntity> : IEntityTypeConfiguration<TEntity> where TEntity : Entity
 {
-    public abstract void Configure(EntityTypeBuilder<TEntity> builder);
+    public void Configure(EntityTypeBuilder<TEntity> builder)
+    {
+        ConfigureEntity(builder);
+    }
+    protected abstract void ConfigureEntity(EntityTypeBuilder<TEntity> builder);
 }

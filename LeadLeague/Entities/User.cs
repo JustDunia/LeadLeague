@@ -9,11 +9,13 @@ public sealed class User : Entity
     public string LastName { get; set; } = string.Empty;
     public required string Email { get; set; }
     public DateOnly? DateOfBirth { get; set; }
+    public required string OktaId { get; set; }
 }
 
 public sealed class UserDbConfiguration : EntityDbConfiguration<User>
 {
-    public override void Configure(EntityTypeBuilder<User> builder)
+    protected override void ConfigureEntity(EntityTypeBuilder<User> builder)
     {
+        builder.HasIndex(u => u.OktaId).IsUnique();
     }
 }

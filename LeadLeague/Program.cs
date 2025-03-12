@@ -1,9 +1,11 @@
 using LeadLeague;
+using LeadLeague.Auth;
 using LeadLeague.Database;
+using LeadLeague.OpenApi;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-using static LeadLeague.AuthConfiguration;
+using static LeadLeague.Auth.AuthConfiguration;
 
 Logger.Create();
 
@@ -29,6 +31,7 @@ try
 
     app.UseAuthentication();
     app.UseAuthorization();
+    app.UseUserContext();
 
     if (app.Environment.IsDevelopment())
     {
@@ -38,7 +41,11 @@ try
 
     app.UseHttpsRedirection();
 
-    app.MapGet("/", [Authorize] (HttpContext context) => "Hello world");
+    app.MapGet("/", [Authorize] (HttpContext context) =>
+    {
+
+        return "Hello world";
+    });
 
     app.Run();
 }
