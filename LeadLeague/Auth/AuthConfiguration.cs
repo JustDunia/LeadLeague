@@ -9,6 +9,7 @@ public static class AuthConfiguration
     {
         var oktaDomain = Environment.GetEnvironmentVariable("OKTA_DOMAIN");
         var oktaAudience = Environment.GetEnvironmentVariable("OKTA_AUDIENCE");
+        var localAudience = Environment.GetEnvironmentVariable("LOCAL_AUDIENCE");
 
         services.AddAuthentication(options =>
         {
@@ -18,10 +19,10 @@ public static class AuthConfiguration
         .AddJwtBearer(options =>
         {
             options.Authority = $"https://{oktaDomain}";
-            options.Audience = oktaAudience;
             options.TokenValidationParameters = new TokenValidationParameters
             {
-                NameClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"
+                NameClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier",
+                ValidAudiences = [oktaAudience, localAudience]
             };
         });
 

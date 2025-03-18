@@ -39,11 +39,14 @@ try
         app.MapScalarApi();
     }
 
-    app.UseHttpsRedirection();
+    if (!app.Environment.IsDevelopment())
+    {
+        // due to SSL certificate problem in Android Emulator
+        app.UseHttpsRedirection();
+    }
 
     app.MapGet("/", [Authorize] (HttpContext context) =>
     {
-
         return "Hello world";
     });
 
