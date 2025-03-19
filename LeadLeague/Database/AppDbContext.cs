@@ -18,7 +18,6 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
     {
         base.ConfigureConventions(configurationBuilder);
 
-        configurationBuilder.Properties<DateTime>().HaveColumnType("timestamp");
         configurationBuilder.Properties<string>().HaveMaxLength(256);
     }
 }

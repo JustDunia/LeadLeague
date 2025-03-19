@@ -1,9 +1,11 @@
 ﻿using LeadLeague.Database;
+using LeadLeague.Entities;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace LeadLeague.Auth
 {
-    public class UserContextMiddleware(RequestDelegate next)
+    public sealed class UserContextMiddleware(RequestDelegate next)
     {
         public async Task Invoke(HttpContext context, AppDbContext dbContext)
         {
@@ -11,13 +13,34 @@ namespace LeadLeague.Auth
 
             if (user?.Identity?.IsAuthenticated ?? false)
             {
-                var oktaId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-                // TODO implement logic to find or create user
-                //var dbUser = await dbContext.Users.FirstOrDefaultAsync(u => u.OktaId == oktaId);
+                _ = await GetOrCreateUser(user, dbContext);
             }
 
             await next(context);
+        }
+
+        private async Task<User> GetOrCreateUser(ClaimsPrincipal? user, AppDbContext dbContext)
+        {
+            ArgumentNullException.ThrowIfNull(user);
+
+            var oktaId = user.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+
+            var dbUser = await dbContext.Users.FirstOrDefaultAsync(x => x.OktaId == oktaId);
+            if (dbUser is null)
+            {
+                var userName = user.FindFirstValue("nickname")!;
+                var email = user.FindFirstValue("name")!;
+                dbUser = new User
+                {
+                    UserName = userName,
+                    Email = email,
+                    OktaId = oktaId
+                };
+                dbContext.Add(dbUser);
+                await dbContext.SaveChangesAsync();
+            }
+
+            return dbUser;
         }
     }
 
