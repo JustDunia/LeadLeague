@@ -3,6 +3,7 @@ using System;
 using LeadLeague.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LeadLeague.Database.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250320175441_AddRoles")]
+    partial class AddRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,27 +29,22 @@ namespace LeadLeague.Database.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("name");
+                        .HasColumnType("character varying(50)");
 
-                    b.HasKey("Id")
-                        .HasName("pk_roles");
+                    b.HasKey("Id");
 
                     b.HasIndex("Name")
-                        .IsUnique()
-                        .HasDatabaseName("ix_roles_name");
+                        .IsUnique();
 
-                    b.ToTable("roles", (string)null);
+                    b.ToTable("Roles");
 
                     b.HasData(
                         new
@@ -85,74 +83,60 @@ namespace LeadLeague.Database.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateOnly?>("DateOfBirth")
-                        .HasColumnType("date")
-                        .HasColumnName("date_of_birth");
+                        .HasColumnType("date");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)")
-                        .HasColumnName("email");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)")
-                        .HasColumnName("first_name");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)")
-                        .HasColumnName("last_name");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("OktaId")
                         .IsRequired()
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)")
-                        .HasColumnName("okta_id");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)")
-                        .HasColumnName("user_name");
+                        .HasColumnType("character varying(256)");
 
-                    b.HasKey("Id")
-                        .HasName("pk_users");
+                    b.HasKey("Id");
 
                     b.HasIndex("OktaId")
-                        .IsUnique()
-                        .HasDatabaseName("ix_users_okta_id");
+                        .IsUnique();
 
-                    b.ToTable("users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("RoleUser", b =>
                 {
                     b.Property<Guid>("RolesId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("roles_id");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("UsersId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("users_id");
+                        .HasColumnType("uuid");
 
-                    b.HasKey("RolesId", "UsersId")
-                        .HasName("pk_role_user");
+                    b.HasKey("RolesId", "UsersId");
 
-                    b.HasIndex("UsersId")
-                        .HasDatabaseName("ix_role_user_users_id");
+                    b.HasIndex("UsersId");
 
-                    b.ToTable("role_user", (string)null);
+                    b.ToTable("RoleUser");
                 });
 
             modelBuilder.Entity("RoleUser", b =>
@@ -161,15 +145,13 @@ namespace LeadLeague.Database.Migrations
                         .WithMany()
                         .HasForeignKey("RolesId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_role_user_roles_roles_id");
+                        .IsRequired();
 
                     b.HasOne("LeadLeague.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_role_user_users_users_id");
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

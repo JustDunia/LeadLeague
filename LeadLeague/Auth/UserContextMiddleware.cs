@@ -13,7 +13,8 @@ namespace LeadLeague.Auth
 
             if (user?.Identity?.IsAuthenticated ?? false)
             {
-                _ = await GetOrCreateUser(user, dbContext);
+                var dbUser = await GetOrCreateUser(user, dbContext);
+                AddRolesToUserClaims(user, dbUser.Roles);
             }
 
             await next(context);
@@ -25,7 +26,10 @@ namespace LeadLeague.Auth
 
             var oktaId = user.FindFirst(ClaimTypes.NameIdentifier)!.Value;
 
-            var dbUser = await dbContext.Users.FirstOrDefaultAsync(x => x.OktaId == oktaId);
+            var dbUser = await dbContext.Users
+                .Include(x => x.Roles)
+                .FirstOrDefaultAsync(x => x.OktaId == oktaId);
+
             if (dbUser is null)
             {
                 var userName = user.FindFirstValue("nickname")!;
@@ -34,13 +38,20 @@ namespace LeadLeague.Auth
                 {
                     UserName = userName,
                     Email = email,
-                    OktaId = oktaId
+                    OktaId = oktaId,
+                    Roles = [new Role { Name = RoleType.Athlete }]
                 };
                 dbContext.Add(dbUser);
                 await dbContext.SaveChangesAsync();
             }
 
             return dbUser;
+        }
+
+        private void AddRolesToUserClaims(ClaimsPrincipal user, IEnumerable<Role> roles)
+        {
+            var claims = roles.Select(x => new Claim(ClaimTypes.Role, x.Name.ToString()));
+            user.AddIdentity(new(claims));
         }
     }
 

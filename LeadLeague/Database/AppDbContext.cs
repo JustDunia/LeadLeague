@@ -6,6 +6,7 @@ namespace LeadLeague.Database;
 public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
     public DbSet<User> Users { get; set; }
+    public DbSet<Role> Roles { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -18,6 +19,11 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
     {
         base.ConfigureConventions(configurationBuilder);
 
-        configurationBuilder.Properties<string>().HaveMaxLength(256);
+        configurationBuilder.Properties<string>()
+            .HaveMaxLength(256);
+
+        configurationBuilder.Properties<Enum>()
+            .HaveConversion<string>()
+            .HaveMaxLength(50);
     }
 }

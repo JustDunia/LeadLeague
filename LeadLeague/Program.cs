@@ -2,8 +2,8 @@ using LeadLeague;
 using LeadLeague.Auth;
 using LeadLeague.Database;
 using LeadLeague.OpenApi;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Serilog;
 using static LeadLeague.Auth.AuthConfiguration;
 
@@ -25,13 +25,15 @@ try
 
     builder.Services.AddDbContext<AppDbContext>(options => options
         .UseNpgsql(builder.Configuration.GetConnectionString("Default"))
+        .ReplaceService<IHistoryRepository, MigrationsHistoryRepository>()
+        .UseSnakeCaseNamingConvention()
     );
 
     var app = builder.Build();
 
     app.UseAuthentication();
-    app.UseAuthorization();
     app.UseUserContext();
+    app.UseAuthorization();
 
     if (app.Environment.IsDevelopment())
     {
@@ -45,7 +47,7 @@ try
         app.UseHttpsRedirection();
     }
 
-    app.MapGet("/", [Authorize] (HttpContext context) =>
+    app.MapGet("/", [HasRole(RoleType.Admin)] (HttpContext context) =>
     {
         return "Hello world";
     });

@@ -11,6 +11,7 @@ public sealed class User : Entity
     public required string Email { get; set; }
     public DateOnly? DateOfBirth { get; set; }
     public required string OktaId { get; set; }
+    public List<Role> Roles { get; set; } = [];
 }
 
 public sealed class UserDbConfiguration : EntityDbConfiguration<User>
