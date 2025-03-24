@@ -1,3 +1,4 @@
+using FastEndpoints;
 using LeadLeague;
 using LeadLeague.Auth;
 using LeadLeague.Database;
@@ -29,6 +30,8 @@ try
         .UseSnakeCaseNamingConvention()
     );
 
+    builder.Services.AddFastEndpoints();
+
     var app = builder.Build();
 
     app.UseAuthentication();
@@ -51,6 +54,7 @@ try
     {
         return "Hello world";
     });
+    app.UseFastEndpoints();
 
     app.Run();
 }
