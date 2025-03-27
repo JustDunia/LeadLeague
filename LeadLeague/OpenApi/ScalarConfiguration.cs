@@ -1,24 +1,23 @@
 ﻿using Scalar.AspNetCore;
 
-namespace LeadLeague.OpenApi
+namespace LeadLeague.OpenApi;
+
+internal static class ScalarConfiguration
 {
-    internal static class ScalarConfiguration
+    public static WebApplication MapScalarApi(this WebApplication app)
     {
-        public static WebApplication MapScalarApi(this WebApplication app)
+        var token = app.Configuration["OktaToken"];
+
+        app.MapScalarApiReference(options =>
         {
-            var token = app.Configuration["OktaToken"];
-
-            app.MapScalarApiReference(options =>
+            options
+            .WithPreferredScheme("Bearer")
+            .WithHttpBearerAuthentication(bearer =>
             {
-                options
-                .WithPreferredScheme("Bearer")
-                .WithHttpBearerAuthentication(bearer =>
-                {
-                    bearer.Token = token;
-                });
+                bearer.Token = token;
             });
+        });
 
-            return app;
-        }
+        return app;
     }
 }

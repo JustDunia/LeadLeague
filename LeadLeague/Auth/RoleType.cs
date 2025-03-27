@@ -1,11 +1,10 @@
-﻿namespace LeadLeague.Auth
+﻿namespace LeadLeague.Auth;
+
+public enum RoleType
 {
-    public enum RoleType
-    {
-        Admin,
-        Manager,
-        Office,
-        Coach,
-        Athlete,
-    }
+    Admin,
+    Manager,
+    Office,
+    Coach,
+    Athlete,
 }

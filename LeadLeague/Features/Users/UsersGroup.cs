@@ -1,16 +1,15 @@
 ﻿using FastEndpoints;
 
-namespace LeadLeague.Features.Users
+namespace LeadLeague.Features.Users;
+
+public class UsersGroup : Group
 {
-    public class UsersGroup : Group
+    public UsersGroup()
     {
-        public UsersGroup()
+        Configure("users", ep =>
         {
-            Configure("users", ep =>
-            {
-                ep.Description(x => x
-                    .WithTags("Users"));
-            });
-        }
+            ep.Description(x => x
+                .WithTags("Users"));
+        });
     }
 }
