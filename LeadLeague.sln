@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# 17
+# Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeadLeague", "LeadLeague\LeadLeague.csproj", "{01F1E741-BD7E-40A5-A062-C073393A441E}"
@@ -26,6 +26,11 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
+		RESX_DuplicateKeyHandling = Rename
+		RESX_PrefixTranslations = False
+		RESX_ConfirmAddLanguageFile = True
+		RESX_AutoCreateNewLanguageFiles = True
+		RESX_SortFileContentOnSave = True
 		SolutionGuid = {35BCCFE6-BA36-4A14-9D11-5CDE37519FD1}
 	EndGlobalSection
 EndGlobal

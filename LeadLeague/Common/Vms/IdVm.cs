@@ -11,6 +11,6 @@ public abstract class IdVmValidator<T> : Validator<T> where T : IdVm
     {
         RuleFor(x => x.Id)
             .NotEmpty()
-            .WithMessage("Id is required"); ;
+            .WithMessage(string.Format(Resources.Errors.FieldIsRequired, nameof(IdVm.Id)));
     }
 }

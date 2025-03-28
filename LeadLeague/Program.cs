@@ -23,7 +23,7 @@ try
     {
         options.AddDocumentTransformer<BearerSecuritySchemeTransformer>();
     });
-
+    builder.Services.AddCustomLocalization();
     builder.Services.AddDbContext<AppDbContext>(options => options
         .UseNpgsql(builder.Configuration.GetConnectionString("Default"))
         .ReplaceService<IHistoryRepository, MigrationsHistoryRepository>()
@@ -34,6 +34,7 @@ try
 
     var app = builder.Build();
 
+    app.UseRequestLocalization();
     app.UseAuthentication();
     app.UseUserContext();
     app.UseAuthorization();
@@ -50,10 +51,6 @@ try
         app.UseHttpsRedirection();
     }
 
-    app.MapGet("/", [HasRole(RoleType.Admin)] (HttpContext context) =>
-    {
-        return "Hello world";
-    });
     app.UseFastEndpoints();
 
     app.Run();
